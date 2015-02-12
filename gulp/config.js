@@ -16,6 +16,14 @@ module.exports = {
       imagePath: 'images' // Used by the image-url helper
     }
   },
+  less: {
+    src: src + "/less/app.less",
+    dest: dest,
+    // settings: {
+    //   indentedSyntax: true, // Enable .less syntax!
+    //   imagePath: 'images' // Used by the image-url helper
+    // }
+  },
   images: {
     src: src + "/images/**",
     dest: dest + "/images"
@@ -29,8 +37,11 @@ module.exports = {
     src: src + '/icons/*.svg',
     dest: dest + '/fonts',
     sassDest: src + '/sass',
-    template: './gulp/tasks/iconFont/template.sass.swig',
+    lessDest: src + '/less',
+    templateSASS: './gulp/tasks/iconFont/template.sass.swig',
+    template: './gulp/tasks/iconFont/template.less.swig',
     sassOutputName: '_icons.sass',
+    lessOutputName: '_icons.less',
     fontPath: 'fonts',
     className: 'icon',
     options: {
