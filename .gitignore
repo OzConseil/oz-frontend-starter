@@ -3,6 +3,8 @@
 
 /www
 /sourcemaps
+/vendor/js/libs.js
+/vendor/js/libs.js.map
 
 Desktop.ini
 
