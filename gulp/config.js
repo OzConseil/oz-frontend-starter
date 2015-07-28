@@ -2,6 +2,9 @@ var dest = './www';
 var src = './src';
 
 module.exports = {
+  clean: {
+    src: dest
+  },
   production: {
     src: dest + '/**/*.+(js|css).map',
     dest: dest,

@@ -7,7 +7,7 @@
     "url": "git@gitlab.lan:oz/oz-frontend-starter.git"
   },
   "scripts": {
-    "clean": "rimraf www/*",
+    "clean": "gulp clean",
     "prebuild": "npm run clean && npm install",
     "icons": "gulp iconFont",
     "production": "gulp production",
