@@ -1,5 +1,6 @@
 The MIT License (MIT)
 
+Copyright (c) 2015 Oz Conseil
 Copyright (c) 2014 Daniel Tello
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

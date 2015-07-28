@@ -1,46 +1,53 @@
-var dest = "./build";
+var dest = './www';
 var src = './src';
 
 module.exports = {
+  production: {
+    src: dest + '/**/*.+(js|css).map',
+    dest: dest,
+    destMaps: './sourcemaps'
+  },
   browserSync: {
     server: {
       // Serve up our build folder
       baseDir: dest
     }
   },
-  sass: {
-    src: src + "/sass/*.{sass,scss}",
-    dest: dest,
-    settings: {
-      indentedSyntax: true, // Enable .sass syntax!
-      imagePath: 'images' // Used by the image-url helper
-    }
+  lint: {
+    jsSrc: src + '/**/*.js',
+    jsDest: src
   },
   less: {
-    src: src + "/less/app.less",
+    autoprefixer: {
+      browsers: ['last 2 version']
+    },
+    watchSrc: src + '/**/*.less',
+    src: [dest + '/*.less',
+      src + '/index.less'
+    ],
     dest: dest,
-    // settings: {
-    //   indentedSyntax: true, // Enable .less syntax!
-    //   imagePath: 'images' // Used by the image-url helper
-    // }
+    outputName: 'index.css'
   },
   images: {
-    src: src + "/images/**",
-    dest: dest + "/images"
+    src: src + '/images/**',
+    dest: dest + '/images'
   },
   markup: {
-    src: src + "/htdocs/**",
+    src: [src + '/index.html',
+      src + '/htdocs/**'
+    ],
     dest: dest
   },
-  iconFonts: {
+  fonts: {
+    src: src + '/fonts/**',
+    dest: dest + '/fonts'
+  },
+  iconFont: {
     name: 'Gulp Starter Icons',
     src: src + '/icons/*.svg',
     dest: dest + '/fonts',
-    sassDest: src + '/sass',
-    lessDest: src + '/less',
-    templateSASS: './gulp/tasks/iconFont/template.sass.swig',
+    lessDest: src,
     template: './gulp/tasks/iconFont/template.less.swig',
-    sassOutputName: '_icons.sass',
     lessOutputName: '_icons.less',
     fontPath: 'fonts',
     className: 'icon',
@@ -50,30 +57,58 @@ module.exports = {
       normalize: false
     }
   },
+  sprite: {
+    src: src + '/icons/*.png',
+    destStyle: dest,
+    destImage: dest + '/images',
+    options: {
+      base64: false,
+      name: 'sprite',
+      style: 'sprite.less',
+      cssPath: './images',
+      processor: 'less'
+    }
+  },
   browserify: {
     // A separate bundle will be generated for each
     // bundle config in the list below
     bundleConfigs: [{
-      entries: src + '/javascript/global.js', // entries: src + '/javascript/global.coffee',
+      debug: true,
+      paths: src,
+      entries: src + '/index.js',
       dest: dest,
-      outputName: 'global.js',
-      // Additional file extentions to make optional
-      extensions: ['.coffee', '.hbs'],
-      // list of modules to make require-able externally
-      require: ['jquery', 'backbone/node_modules/underscore']
-      // See https://github.com/greypants/gulp-starter/issues/87 for note about
-      // why this is 'backbone/node_modules/underscore' and not 'underscore'
-    }, {
-      entries: src + '/javascript/page.js',
-      dest: dest,
-      outputName: 'page.js',
-      // list of externally available modules to exclude from the bundle
-      external: ['jquery', 'underscore']
-    }]
+      outputName: 'index.js',
+
+      external: ['jquery',
+        'lodash',
+        'debug',
+        'hbsfy/runtime',
+        'source-map-support/register'
+      ]
+    }],
+    pluginsBundleConfig: {
+      debug: true,
+      paths: src,
+      entries: [],
+      dest: './vendor/js',
+      outputName: 'libs.js',
+
+      require: ['jquery',
+        'lodash',
+        'debug',
+        'hbsfy/runtime',
+        'source-map-support/register'
+      ]
+    }
   },
-  production: {
-    cssSrc: dest + '/*.css',
-    jsSrc: dest + '/*.js',
-    dest: dest
+  vendorJs: {
+    src: ['./vendor/js/*js'],
+    dest: dest,
+    outputName: 'vendor.js'
+  },
+  vendorCss: {
+    src: ['./vendor/css/*css'],
+    dest: dest,
+    outputName: 'vendor.css'
   }
 };

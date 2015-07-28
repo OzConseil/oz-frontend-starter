@@ -1,0 +1,15 @@
+* text eol=lf
+
+*.png binary
+*.jpeg binary
+*.jpg binary
+*.ttf binary
+*.eot binary
+*.woff binary
+*.jar binary
+*.winmd binary
+*.dll binary
+*.ogg binary
+
+*.so binary
+*.o binary

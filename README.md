@@ -1,117 +1,105 @@
-gulp-starter
-============
+# Oz Frontend starter
 
-Starter Gulp + Browserify project with examples of how to accomplish some common tasks and workflows. Read the [blog post](http://viget.com/extend/gulp-browserify-starter-faq) for more context, and check out the [Wiki](https://github.com/greypants/gulp-starter/wiki) for some good background knowledge.
+Heavily based on greypants [gulp-starter](https://github.com/greypants/gulp-starter).
 
-Includes the following tools, tasks, and workflows:
+## Getting started
 
-- [Browserify](http://browserify.org/) (with [browserify-shim](https://github.com/thlorenz/browserify-shim))
-- [Watchify](https://github.com/substack/watchify) (caching version of browserify for super fast rebuilds)
-- [SASS](http://sass-lang.com/) (super fast libsass with [source maps](https://github.com/sindresorhus/gulp-ruby-sass#sourcemap), and [autoprefixer](https://github.com/sindresorhus/gulp-autoprefixer))
-- [CoffeeScript](http://coffeescript.org/) (with source maps!)
-- [BrowserSync](http://browsersync.io) for live reloading and a static server
-- [Image optimization](https://www.npmjs.com/package/gulp-imagemin)
-- Error handling in the console [and in Notification Center](https://github.com/mikaelbr/gulp-notify)
-- Shimming non common-js vendor code with other dependencies (like a jQuery plugin)
-- **New** Multiple bundles with shared dependencies
-- **New** Separate compression task for production builds
-- **New** Icon Font generation
-
-If you've never used Node or npm before, you'll need to install Node.
-If you use homebrew, do:
-
-```
-brew install node
-```
-
-Otherwise, you can download and install from [here](http://nodejs.org/download/).
+Always use `npm` to run any node commands, including gulp.
 
 ### Install npm dependencies
 ```
 npm install
 ```
 
-This runs through all dependencies listed in `package.json` and downloads them to a `node_modules` folder in your project directory.
+There is no `dev` and `production` mode. Everything is always compiled, contatened and uglifyed with an external sourcemap.
+Nonetheless there's a task 'production' to remove the sourcemaps from the `www/` folder.
 
-### The `gulp` command
-To run the version of gulp installed local to the project, in the root of your this project, you'd run
-
+### Compile everything, launch browser and watch for changes
 ```
-./node_modules/.bin/gulp
-```
-
-**WAT.** Why can't I just run `gulp`? Well, you could install gulp globally with `npm install -g gulp`, which will add the gulp script to your global bin folder, but it's always better to use the version that's specified in your project's package.json.  My solution to this is to simply alias `./node_modules/.bin/gulp` to `gulp`. Open up `~/.zshrc` or `~./bashrc` and add the following line:
-
-```
-alias gulp='node_modules/.bin/gulp'
-```
-Now, running `gulp` in the project directory will use the version specified and installed from the `package.json` file.
-
-### Run gulp and be amazed.
-The first time you run the app, you'll also need to generate the iconFont, since this is not something we want to run every time with our `default` task.
-```
-gulp iconFont
+npm run build
+npm start
 ```
 
-After that, just run the `default` gulp task with:
-```
-gulp
-```
-
-This will run the `default` gulp task defined in `gulp/tasks/default.js`, which has the following task dependencies: `['sass', 'images', 'markup', 'watch']`
-- The `sass` task compiles your css files.
-- `images` moves images copies images from a source folder, performs optimizations, the outputs them into the build folder
+This will run the `default` gulp task defined in `gulp/tasks/default.js`, which has the following task dependencies: `'lint','less', 'fonts', 'images', 'markup', 'watch'`
+- The `less` task compiles and minify the `index.less` file, with an `autoprefixer`.
+- `fonts` doesn't do anything but copy font files over from src to build.
+- `images` moves images from source folder, ~~performs optimizations~~, then outputs them into the build folder.
 - `markup` doesn't do anything but copy an html file over from src to build, but here is where you could do additional templating work.
-- `watch` has `watchify` as a dependency, which will run the browserifyTask with a `devMode` flag that enables sourcemaps and watchify, a browserify add-on that enables caching for super fast recompiling. The task itself starts watching source files and will re-run the appropriate tasks when those files change.
+- `watch` has `watchify` as a dependency, which will run the `browserify` task with a `devMode` flag that enables watchify. The task itself starts `browser-sync`, watches source files and will re-run the appropriate tasks when those files change.
 
-### Configuration
-All paths and plugin settings have been abstracted into a centralized config object in `gulp/config.js`. Adapt the paths and settings to the structure and needs of your project.
-
-### Additional Features and Tasks
-
-#### Icon Fonts
-
+### Rebuild everything (before deployement)
 ```
-gulp iconFont
+npm run build
 ```
+
+## Coding style
+Use ES6 and [Airbnb style](https://github.com/airbnb/javascript) for javascript.
+
+On SublimeText install [SublimeLinter-eslint](https://github.com/roadhump/SublimeLinter-eslint), [SublimeLinter-jscs](https://github.com/SublimeLinter/SublimeLinter-jscs/) and [EditorConfig](https://github.com/sindresorhus/editorconfig-sublime).
+
+Rules are in `.eslintrc` and `.jscsrc`.
+
+There is a `.jsbeautifyrc` for autoformating support with [JsFormat](https://github.com/jdc0589/JsFormat).
+You could also try [JSCSFormatter](https://github.com/TheSavior/SublimeJSCSFormatter). See this [blog post by Addy Osmani](http://addyosmani.com/blog/auto-formatting-javascript-code-style-with-jscs/).
+
+## Gulp tasks
+All paths and plugin settings have been abstracted into a centralized config object in `gulp/config.js`.
+
+### Browserify
+Compile `src/index.js` with [Browserify](http://browserify.org/). It also transpiles from ES6 and compiles [Handlebars](http://handlebarsjs.com/) templates.
+
+The task can create multiple bundles with the `bundleConfigs` array in `gulp/config.js`. By default it creates two bundles, `index.js` for your code and `libs.js` for all your deps.
+The `vendor` task is configured to concat the `libs.js` with all vendor js files in a `vendor.js` file.
+
+### Browser-sync
+Launch a [BrowserSync](http://browsersync.io/) server on [http://localhost:3000](http://localhost:3000).
+Admin panel is at [http://localhost:3001](http://localhost:3001).
+
+### Build
+Run all these tasks `['markup', 'images', 'fonts', 'less', 'vendor']` so all the assets are ready in `www/` folder.
+
+### Fonts
+Copy all files in `fonts/` folder.
+
+### Images
+Copy all images in `images/` folder. You can enable `imagein` inside if needed.
+
+### Less
+Lint, compile, autoprefix, concat and minify less files.
+
+### Lint
+Lint all js code with `eslint`.
+
+### Markup
+Copy all files in the folder to the root of the `www/` directory.
+
+### Sprite
+This task is disabled by default. If you enable it, it create a sprite and css file with all images in the `icons/` folder.
+
+### Vendor
+Concat and minify all `js` and `css` file from the `vendor` folder to `vendor.css` and `vendor.js`. The `vendor.js` file will be concatenated with the `libs` bundle so we end up with two js files loaded.
+
+### Watch
+
+### Watchify
+
+### Icon Fonts
 
 Generating and re-generating icon fonts is an every once and a while task, so it's not included in `tasks/default.js`. Run the task separately any time you add an svg to your icons folder. This task has a couple of parts.
 
-##### The task
-The task calls `gulp-iconfont` and passes the options we've configured in [`gulp/config.js`](https://github.com/greypants/gulp-starter/blob/icon-font/gulp/config.js#L27). Then it listens for a `codepoints` that triggers the generation of the sass file you'll be importing into your stylesheets. [`gulp/iconFont/generateIconSass`](./gulp/tasks/iconFont/generateIconSass.js) passes the icon data to [a template](./gulp/tasks/iconFont/template.sass.swig), then outputs the resulting file to your sass directory. See the [gulp-iconFont docs](https://github.com/nfroidure/gulp-iconfont) for more config details. You may reconfigure the template to output whatever you'd like. The way it's currently set up will make icons usable as both class names and mixins.
+#### The task
+The task calls `gulp-iconfont` and passes the options we've configured in `gulp/config.js`. Then it listens for a `codepoints` that triggers the generation of the sass file you'll be importing into your stylesheets. `gulp/iconFont/generateIconLess` passes the icon data to [a template](./gulp/tasks/iconFont/template.less.swig), then outputs the resulting file to your sass directory. See the [gulp-iconFont docs](https://github.com/nfroidure/gulp-iconfont) for more config details. You may reconfigure the template to output whatever you'd like. The way it's currently set up will make icons usable as both class names and mixins.
 
-```sass
-.twitter-button
+```less
+.twitter-button {
   +icon--twitter // (@include in .scss syntax)
+}
 ```
 
-or 
+or
 
 ```html
 <span class="icon -twitter"></span>
 ```
 
-#### Production files
-
-There is also a `production` task you can run: 
-```
-gulp production
-```
-This will run JavaScript tests, then re-build optimized, compressed css and js files to the build folder, as well as output their file sizes to the console. It's a shortcut for running the following tasks: `karma`, `images`, `iconFont` `minifyCss`, `uglifyJs`.
-
-#### JavaScript Tests with Karma
-This repo includes a basic js testing setup with the following: [Karma](http://karma-runner.github.io/0.12/index.html), [Mocha](http://mochajs.org/), [Chai](http://chaijs.com/), and [Sinon](http://sinonjs.org/). There is `karma` gulp task, which the `production` task uses to run the tests before compiling. If any tests fail, the `production` task will abort.
-
-To run the tests and start monitoring files:
-```
-./node_modules/karma/bin/karma start
-```
-
-Want to just run `karma start`? Either add `alias karma="./node_modules/karma/bin/karma"` to your shell config or install the karma command line interface globally with `npm install -g karma-cli`.
-
-
--- 
-
-Social icons courtesy of [icomoon.io](https://icomoon.io/#icons-icomoon)</small>
-
-Made with ♥ at [Viget](http://viget.com)!
+--

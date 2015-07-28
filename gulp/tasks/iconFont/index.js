@@ -1,8 +1,8 @@
 var gulp             = require('gulp');
 var iconfont         = require('gulp-iconfont');
-var config           = require('../../config').iconFonts;
-var generateIconSass = require('./generateIconSass');
+var config           = require('../../config').iconFont;
 var generateIconLess = require('./generateIconLess');
+// var generateIconSass = require('./generateIconSass');
 
 gulp.task('iconFont', function() {
   return gulp.src(config.src)
