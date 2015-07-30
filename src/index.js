@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import debug from 'debug';
 
-import tpl from './home.hbs';
+import tpl from './templates/home.hbs';
 
 const dbg = debug('oz:index');
 
