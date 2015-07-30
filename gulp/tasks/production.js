@@ -7,7 +7,7 @@ var config = require('../config').production;
 gulp.task('production', ['build'], function() {
 
   return rimraf(config.destMaps, function(err){
-    gulp.src(config.src)
+    return gulp.src(config.src)
       .pipe(gulp.dest(config.destMaps));
 
     glob(config.src, function (err, files) {
