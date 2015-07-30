@@ -1,7 +1,9 @@
-var rimraf = require('rimraf');
 var gulp = require('gulp');
+var del = require('del');
+var vinylPaths = require('vinyl-paths');
 var config = require('../config').clean;
 
-gulp.task('clean', function(done) {
-  return rimraf(config.src, done);
+gulp.task('clean', function() {
+  return gulp.src(config.src)
+      .pipe(vinylPaths(del));
 });

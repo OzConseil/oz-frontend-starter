@@ -1,14 +1,15 @@
 var dest = 'www';
 var src = 'src';
+var maps = 'maps';
 
 module.exports = {
   clean: {
-    src: dest
+    src: [dest, maps]
   },
   production: {
     src: dest + '/**/*.+(js|css).map',
     dest: dest,
-    destMaps: './sourcemaps'
+    destMaps: maps
   },
   browserSync: {
     server: {

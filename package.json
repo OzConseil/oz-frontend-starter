@@ -8,12 +8,13 @@
   },
   "scripts": {
     "clean": "gulp clean",
-    "prebuild": "npm run clean && npm install",
     "icons": "gulp iconFont",
+    "preproduction": "npm run clean",
     "production": "gulp production",
+    "prebuild": "npm run clean && npm install",
     "build": "gulp build",
-    "prestart": "npm run build",
     "gulp": "gulp",
+    "prestart": "npm run build",
     "start": "gulp"
   },
   "devDependencies": {
@@ -54,6 +55,7 @@
     "rimraf": "^2.4.2",
     "source-map-support": "^0.3.2",
     "vinyl-buffer": "^1.0.0",
+    "vinyl-paths": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.3.0"
   },
