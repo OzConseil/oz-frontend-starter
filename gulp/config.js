@@ -1,5 +1,5 @@
-var dest = './www';
-var src = './src';
+var dest = 'www';
+var src = 'src';
 
 module.exports = {
   clean: {
@@ -32,7 +32,8 @@ module.exports = {
     outputName: 'index.css'
   },
   images: {
-    src: src + '/images/**',
+    src: [src + '/images',
+      src + '/images/**/*'],
     dest: dest + '/images'
   },
   markup: {
@@ -42,7 +43,8 @@ module.exports = {
     dest: dest
   },
   fonts: {
-    src: src + '/fonts/**',
+    src: [src + '/fonts',
+      src + '/fonts/**/*'],
     dest: dest + '/fonts'
   },
   iconFont: {

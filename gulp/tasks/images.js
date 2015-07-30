@@ -6,11 +6,8 @@ var reload = require('../util/bs').reload;
 
 gulp.task('images', function() {
   return gulp.src(config.src)
-
     // Ignore unchanged files
-    // .pipe(newer(config.dest))
-
-    // Optimize
+    .pipe(newer(config.dest))
     // .pipe(imagemin())
     .pipe(gulp.dest(config.dest))
     .pipe(reload({
