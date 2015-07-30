@@ -6,7 +6,7 @@ import tpl from './home.hbs';
 const dbg = debug('oz:index');
 
 const content = tpl({
-  content: 'Even with template'
+  content: 'Even with template',
 });
 
 $(() => {
