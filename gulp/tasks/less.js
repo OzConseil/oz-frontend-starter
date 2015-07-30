@@ -13,8 +13,8 @@ var handleErrors = require('../util/handleErrors');
 gulp.task('less', function() {
   return gulp.src(config.src)
     .pipe(recess())
-    .pipe(recess.reporter())
     .on('error', handleErrors)
+    .pipe(recess.reporter())
     .pipe(sourcemaps.init())
     .pipe(less(config.settings))
     .on('error', handleErrors)
