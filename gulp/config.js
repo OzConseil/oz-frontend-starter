@@ -8,8 +8,7 @@ module.exports = {
   },
   production: {
     src: dest + '/**/*.+(js|css).map',
-    dest: dest,
-    destMaps: maps
+    dest: maps,
   },
   browserSync: {
     server: {

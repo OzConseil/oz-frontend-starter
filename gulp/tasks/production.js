@@ -3,8 +3,8 @@ var del = require('del');
 var vinylPaths = require('vinyl-paths');
 var config = require('../config').production;
 
-gulp.task('production', ['build'], function(done) {
+gulp.task('production', ['build'], function() {
   return gulp.src(config.src)
-      .pipe(gulp.dest(config.destMaps))
-      .pipe(vinylPaths(del));
+      .pipe(vinylPaths(del))
+      .pipe(gulp.dest(config.dest));
 });
