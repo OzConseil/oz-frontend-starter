@@ -11,7 +11,7 @@ var autoprefixer = require('gulp-autoprefixer');
 var handleErrors = require('../util/handleErrors');
 
 gulp.task('less', function() {
-  return gulp.src(config.src)
+  return gulp.src(config.entry)
     .pipe(recess())
     .on('error', handleErrors)
     .pipe(recess.reporter())

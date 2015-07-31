@@ -17,17 +17,17 @@ module.exports = {
     }
   },
   lint: {
-    jsSrc: src + '/**/*.js',
-    jsDest: src
+    js: {
+      src: src + '/**/*.js',
+      dest: src
+    }
   },
   less: {
     autoprefixer: {
       browsers: ['last 2 version']
     },
-    watchSrc: src + '/**/*.less',
-    src: [dest + '/*.less',
-      src + '/index.less'
-    ],
+    entry: src + '/index.less',
+    src: src + '/**/*.less',
     dest: dest,
     outputName: 'index.css'
   },
