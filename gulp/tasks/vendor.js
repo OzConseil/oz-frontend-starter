@@ -11,7 +11,7 @@ gulp.task('vendorJs', ['browserify'], function() {
   return gulp.src(configJs.src)
     .pipe(newer(configJs.dest + '/' + configJs.outputName))
     .pipe(sourcemaps.init({
-      loadMaps: true
+      loadMaps: true,
     }))
     .pipe(concat(configJs.outputName))
     .pipe(uglify())

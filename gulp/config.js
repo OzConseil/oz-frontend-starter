@@ -4,7 +4,7 @@ var maps = 'maps';
 
 module.exports = {
   clean: {
-    src: [dest, maps]
+    src: [dest, maps],
   },
   production: {
     src: dest + '/**/*.+(js|css).map',
@@ -13,39 +13,41 @@ module.exports = {
   browserSync: {
     server: {
       // Serve up our build folder
-      baseDir: dest
-    }
+      baseDir: dest,
+    },
   },
   lint: {
     js: {
       src: src + '/**/*.js',
-      dest: src
-    }
+      dest: src,
+    },
   },
   less: {
     autoprefixer: {
-      browsers: ['last 2 version']
+      browsers: ['last 2 version'],
     },
     entry: src + '/index.less',
     src: src + '/**/*.less',
     dest: dest,
-    outputName: 'index.css'
+    outputName: 'index.css',
   },
   images: {
     src: [src + '/images',
-      src + '/images/**/*'],
-    dest: dest + '/images'
+      src + '/images/**/*',
+    ],
+    dest: dest + '/images',
   },
   markup: {
     src: [src + '/index.html',
-      src + '/htdocs/**'
+      src + '/htdocs/**',
     ],
-    dest: dest
+    dest: dest,
   },
   fonts: {
     src: [src + '/fonts',
-      src + '/fonts/**/*'],
-    dest: dest + '/fonts'
+      src + '/fonts/**/*',
+    ],
+    dest: dest + '/fonts',
   },
   iconFont: {
     name: 'Gulp Starter Icons',
@@ -59,8 +61,8 @@ module.exports = {
     options: {
       fontName: 'Post-Creator-Icons',
       appendCodepoints: true,
-      normalize: false
-    }
+      normalize: false,
+    },
   },
   sprite: {
     src: src + '/icons/*.png',
@@ -71,8 +73,8 @@ module.exports = {
       name: 'sprite',
       style: 'sprite.less',
       cssPath: './images',
-      processor: 'less'
-    }
+      processor: 'less',
+    },
   },
   browserify: {
     // A separate bundle will be generated for each
@@ -88,9 +90,9 @@ module.exports = {
         'lodash',
         'debug',
         'hbsfy/runtime',
-        'source-map-support/register'
-      ]
-    }],
+        'source-map-support/register',
+      ],
+    },],
     pluginsBundleConfig: {
       debug: true,
       paths: src,
@@ -102,18 +104,18 @@ module.exports = {
         'lodash',
         'debug',
         'hbsfy/runtime',
-        'source-map-support/register'
-      ]
-    }
+        'source-map-support/register',
+      ],
+    },
   },
   vendorJs: {
     src: ['./vendor/js/*js'],
     dest: dest,
-    outputName: 'vendor.js'
+    outputName: 'vendor.js',
   },
   vendorCss: {
     src: ['./vendor/css/*css'],
     dest: dest,
-    outputName: 'vendor.css'
-  }
+    outputName: 'vendor.css',
+  },
 };

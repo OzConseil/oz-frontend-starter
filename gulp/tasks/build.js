@@ -4,5 +4,5 @@ gulp.task('build', ['markup',
   'images',
   'fonts',
   'less',
-  'vendor'
+  'vendor',
 ]);

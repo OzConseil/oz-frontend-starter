@@ -24,7 +24,9 @@ var sourcemaps = require('gulp-sourcemaps');
 var browserifyTask = function(callback, devMode) {
   process.env.BROWSERIFYSWAP_ENV = 'dist';
 
+  _config.pluginsBundleConfig.external = config.libs;
   if (!devMode) {
+    config.pluginsBundleConfig.require = config.libs;
     config.bundleConfigs.push(config.pluginsBundleConfig);
   }
 
@@ -48,14 +50,14 @@ var browserifyTask = function(callback, devMode) {
         .pipe(source(bundleConfig.outputName))
         .pipe(buffer())
         .pipe(sourcemaps.init({
-          loadMaps: true
+          loadMaps: true,
         }))
         .pipe(uglify())
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(bundleConfig.dest))
         .on('end', reportFinished)
         .pipe(reload({
-          stream: true
+          stream: true,
         }));
     };
 
