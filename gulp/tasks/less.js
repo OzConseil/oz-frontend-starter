@@ -1,6 +1,5 @@
 var gulp         = require('gulp');
 var less         = require('gulp-less');
-var recess       = require('gulp-recess');
 var sourcemaps   = require('gulp-sourcemaps');
 var minifyCSS    = require('gulp-minify-css');
 var handleErrors = require('../util/handleErrors');
@@ -9,11 +8,8 @@ var reload       = require('../util/bs').reload;
 var autoprefixer = require('gulp-autoprefixer');
 var handleErrors = require('../util/handleErrors');
 
-gulp.task('less', function() {
+function doLess() {
   return gulp.src(config.src)
-    .pipe(recess())
-    .on('error', handleErrors)
-    .pipe(recess.reporter())
     .pipe(sourcemaps.init())
     .pipe(less(config.settings))
     .on('error', handleErrors)
@@ -22,4 +18,8 @@ gulp.task('less', function() {
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(config.dest))
     .pipe(reload({stream:true}));
-});
+};
+
+gulp.task('less', doLess);
+
+gulp.task('less-all', ['sprite', 'iconFont'], doLess);

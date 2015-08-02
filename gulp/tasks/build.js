@@ -3,6 +3,6 @@ var gulp = require('gulp');
 gulp.task('build', ['markup',
   'images',
   'fonts',
-  'less',
+  'less-all',
   'vendor',
 ]);
