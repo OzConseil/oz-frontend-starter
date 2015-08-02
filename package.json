@@ -54,6 +54,8 @@
     "require-dir": "^0.3.0",
     "rimraf": "^2.4.2",
     "source-map-support": "^0.3.2",
+    "sprity": "^1.0.7",
+    "sprity-less": "^1.0.3",
     "vinyl-buffer": "^1.0.0",
     "vinyl-paths": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",

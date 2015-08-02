@@ -20,6 +20,9 @@ module.exports = {
       // Serve up our build folder
       baseDir: dest,
     },
+    watchOptions: {
+      ignoreInitial: true,
+    },
   },
   lint: {
     js: {
@@ -35,6 +38,9 @@ module.exports = {
         'last 2 version',
       ],
     },
+    watch: [
+      src + '/**/*.less',
+    ],
     src: [
       src + '/index.less',
     ],
@@ -42,7 +48,6 @@ module.exports = {
   },
   images: {
     src: [
-      src + '/images',
       src + '/images/**/*',
     ],
     dest: dest + '/images',
@@ -55,7 +60,6 @@ module.exports = {
   },
   fonts: {
     src: [
-      src + '/fonts',
       src + '/fonts/**/*',
     ],
     dest: dest + '/fonts',
@@ -64,25 +68,35 @@ module.exports = {
     name: 'Gulp Starter Icons',
     src: src + '/icons/*.svg',
     dest: dest + '/fonts',
-    lessDest:  src + './styles',
+    lessDest: src + '/styles',
     template: './gulp/tasks/iconFont/template.less.swig',
     lessOutputName: '_icons.less',
-    fontPath: 'fonts',
+    fontPath: '/fonts',
     className: 'icon',
     options: {
-      fontName: 'Post-Creator-Icons',
-      appendCodepoints: true,
+      svg: true,
+      timestamp: 0, // see https://github.com/fontello/svg2ttf/issues/33
+      fontName: 'oz-icons',
+      appendUnicode: true,
       normalize: false,
     },
   },
   sprite: {
-    src: src + '/icons/*.png',
-    destStyle: src + './styles',
+    destStyle: src + '/styles',
     destImage: dest + '/images',
     options: {
+      src: src + '/sprites/**/*.png',
       base64: false,
-      name: 'sprite',
-      style: '_sprite.less',
+      split: true,
+      prefix: 'sprite',
+      dimension: [{
+        ratio: 1,
+        dpi: 72,
+      }, {
+        ratio: 2,
+        dpi: 192,
+      },],
+      style: '_sprites.less',
       cssPath: './images',
       processor: 'less',
     },
@@ -115,6 +129,11 @@ module.exports = {
       dest: './vendor/js',
       outputName: 'libs.js',
     },
+
+    // Ignore this lib in the external libs bundle in prod
+    ignoreInProd: [
+      'source-map-support/register',
+    ],
   },
   vendorJs: {
     src: ['./vendor/js/*js'],
