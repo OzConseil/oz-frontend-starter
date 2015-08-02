@@ -24,7 +24,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var browserifyTask = function(callback, devMode) {
   process.env.BROWSERIFYSWAP_ENV = 'dist';
 
-  _config.pluginsBundleConfig.external = config.libs;
+  config.pluginsBundleConfig.external = config.libs;
   if (!devMode) {
     config.pluginsBundleConfig.require = config.libs;
     config.bundleConfigs.push(config.pluginsBundleConfig);

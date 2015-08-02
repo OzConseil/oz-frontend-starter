@@ -77,6 +77,15 @@ module.exports = {
     },
   },
   browserify: {
+    // List here all external libs
+    libs: [
+      'jquery',
+      'lodash',
+      'debug',
+      'hbsfy/runtime',
+      'source-map-support/register',
+    ],
+
     // A separate bundle will be generated for each
     // bundle config in the list below
     bundleConfigs: [{
@@ -85,27 +94,15 @@ module.exports = {
       entries: src + '/index.js',
       dest: dest,
       outputName: 'index.js',
-
-      external: ['jquery',
-        'lodash',
-        'debug',
-        'hbsfy/runtime',
-        'source-map-support/register',
-      ],
     },],
+
+    // separate bundle for external libs
     pluginsBundleConfig: {
       debug: true,
       paths: src,
       entries: [],
       dest: './vendor/js',
       outputName: 'libs.js',
-
-      require: ['jquery',
-        'lodash',
-        'debug',
-        'hbsfy/runtime',
-        'source-map-support/register',
-      ],
     },
   },
   vendorJs: {
