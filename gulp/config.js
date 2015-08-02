@@ -4,10 +4,15 @@ var maps = 'maps';
 
 module.exports = {
   clean: {
-    src: [dest, maps],
+    src: [
+      dest,
+      maps,
+    ],
   },
   production: {
-    src: dest + '/**/*.+(js|css).map',
+    src: [
+      dest + '/**/*.+(js|css).map',
+    ],
     dest: maps,
   },
   browserSync: {
@@ -18,13 +23,17 @@ module.exports = {
   },
   lint: {
     js: {
-      src: src + '/**/*.js',
+      src: [
+        src + '/**/*.js',
+      ],
       dest: src,
     },
   },
   less: {
     autoprefixer: {
-      browsers: ['last 2 version'],
+      browsers: [
+        'last 2 version',
+      ],
     },
     src: [
       src + '/index.less',
@@ -32,19 +41,21 @@ module.exports = {
     dest: dest,
   },
   images: {
-    src: [src + '/images',
+    src: [
+      src + '/images',
       src + '/images/**/*',
     ],
     dest: dest + '/images',
   },
   markup: {
-    src: [src + '/index.html',
-      src + '/htdocs/**',
+    src: [
+      src + '/htdocs/**/*',
     ],
     dest: dest,
   },
   fonts: {
-    src: [src + '/fonts',
+    src: [
+      src + '/fonts',
       src + '/fonts/**/*',
     ],
     dest: dest + '/fonts',
@@ -53,7 +64,7 @@ module.exports = {
     name: 'Gulp Starter Icons',
     src: src + '/icons/*.svg',
     dest: dest + '/fonts',
-    lessDest: src,
+    lessDest:  src + './styles',
     template: './gulp/tasks/iconFont/template.less.swig',
     lessOutputName: '_icons.less',
     fontPath: 'fonts',
@@ -66,12 +77,12 @@ module.exports = {
   },
   sprite: {
     src: src + '/icons/*.png',
-    destStyle: dest,
+    destStyle: src + './styles',
     destImage: dest + '/images',
     options: {
       base64: false,
       name: 'sprite',
-      style: 'sprite.less',
+      style: '_sprite.less',
       cssPath: './images',
       processor: 'less',
     },
