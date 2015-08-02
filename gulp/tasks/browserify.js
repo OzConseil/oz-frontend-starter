@@ -99,6 +99,6 @@ var browserifyTask = function(callback, devMode) {
   config.bundleConfigs.forEach(browserifyThis);
 };
 
-gulp.task('browserify', ['lint'], browserifyTask);
+gulp.task('browserify', ['lint-fail'], browserifyTask);
 
 module.exports = browserifyTask;
