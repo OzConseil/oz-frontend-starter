@@ -26,10 +26,10 @@ module.exports = {
     autoprefixer: {
       browsers: ['last 2 version'],
     },
-    entry: src + '/index.less',
-    src: src + '/**/*.less',
+    src: [
+      src + '/index.less',
+    ],
     dest: dest,
-    outputName: 'index.css',
   },
   images: {
     src: [src + '/images',

@@ -1,5 +1,4 @@
 var gulp         = require('gulp');
-var concat       = require('gulp-concat');
 var less         = require('gulp-less');
 var recess       = require('gulp-recess');
 var sourcemaps   = require('gulp-sourcemaps');
@@ -11,7 +10,7 @@ var autoprefixer = require('gulp-autoprefixer');
 var handleErrors = require('../util/handleErrors');
 
 gulp.task('less', function() {
-  return gulp.src(config.entry)
+  return gulp.src(config.src)
     .pipe(recess())
     .on('error', handleErrors)
     .pipe(recess.reporter())
@@ -19,7 +18,6 @@ gulp.task('less', function() {
     .pipe(less(config.settings))
     .on('error', handleErrors)
     .pipe(autoprefixer(config.autoprefixer))
-    .pipe(concat(config.outputName))
     .pipe(minifyCSS())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(config.dest))
