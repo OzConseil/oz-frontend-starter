@@ -7,14 +7,10 @@
     "url": "git@gitlab.lan:oz/oz-frontend-starter.git"
   },
   "scripts": {
-    "clean": "gulp clean",
-    "icons": "gulp iconFont",
-    "preproduction": "npm run clean",
+    "preproduction": "gulp clean",
     "production": "gulp production",
-    "prebuild": "npm run clean && npm install",
+    "prebuild": "gulp clean",
     "build": "gulp build",
-    "gulp": "gulp",
-    "prestart": "npm run build",
     "start": "gulp"
   },
   "devDependencies": {
@@ -72,7 +68,7 @@
     "@packages": [
       "underscore"
     ],
-    "dist": {
+    "prod": {
       "underscore.js$": "lodash"
     }
   },

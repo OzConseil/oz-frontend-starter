@@ -22,11 +22,18 @@ var _ = require('lodash');
 var sourcemaps = require('gulp-sourcemaps');
 
 var browserifyTask = function(callback, devMode) {
-  process.env.BROWSERIFYSWAP_ENV = 'dist';
+  process.env.BROWSERIFYSWAP_ENV = 'prod';
 
-  config.pluginsBundleConfig.external = config.libs;
+  config.bundleConfigs.forEach(function external(bundle) {
+    bundle.external = config.libs;
+  });
+
   if (!devMode) {
     config.pluginsBundleConfig.require = config.libs;
+    if (process.env.NODE_ENV === 'prod') {
+      config.pluginsBundleConfig.ignore = config.ignoreInProd;
+    }
+
     config.bundleConfigs.push(config.pluginsBundleConfig);
   }
 
@@ -52,6 +59,7 @@ var browserifyTask = function(callback, devMode) {
         .pipe(sourcemaps.init({
           loadMaps: true,
         }))
+
         .pipe(uglify())
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(bundleConfig.dest))
@@ -77,6 +85,13 @@ var browserifyTask = function(callback, devMode) {
     // b.external excludes modules from the bundle, and expects
     // they'll be available externally
     if (bundleConfig.external) b.external(bundleConfig.external);
+
+    // ignore modules and replace them with an empty object
+    if (bundleConfig.ignore) {
+      bundleConfig.ignore.forEach(function ignoreModule(module) {
+        b.ignore(module);
+      });
+    }
 
     var reportFinished = function() {
       // Log when bundling completes
