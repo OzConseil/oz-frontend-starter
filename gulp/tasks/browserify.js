@@ -52,15 +52,20 @@ var browserifyTask = function(callback, devMode) {
       // Log when bundling starts
       bundleLogger.start(bundleConfig.outputName);
 
-      return b.bundle()
+      var preBundle = b.bundle()
         .on('error', handleErrors)
         .pipe(source(bundleConfig.outputName))
         .pipe(buffer())
         .pipe(sourcemaps.init({
           loadMaps: true,
-        }))
+        }));
 
-        .pipe(uglify())
+      if (!devMode) {
+        preBundle
+        .pipe(uglify());
+      }
+
+      return preBundle
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(bundleConfig.dest))
         .on('end', reportFinished)
