@@ -4,7 +4,7 @@ var sourcemaps   = require('gulp-sourcemaps');
 var minifyCSS    = require('gulp-minify-css');
 var handleErrors = require('../util/handleErrors');
 var config       = require('../config').less;
-var reload       = require('../util/bs').reload;
+var stream       = require('../util/bs').stream;
 var autoprefixer = require('gulp-autoprefixer');
 var handleErrors = require('../util/handleErrors');
 
@@ -17,7 +17,7 @@ function doLess() {
     .pipe(minifyCSS())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(config.dest))
-    .pipe(reload({stream:true}));
+    .pipe(stream({match: '**/*.css'}));
 };
 
 gulp.task('less', doLess);
