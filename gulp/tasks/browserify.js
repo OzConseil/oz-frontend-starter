@@ -20,6 +20,7 @@ var config = require('../config').browserify;
 var reload = require('../util/bs').reload;
 var _ = require('lodash');
 var sourcemaps = require('gulp-sourcemaps');
+var shim = require('browserify-shim');
 
 var browserifyTask = function(callback, devMode) {
   process.env.BROWSERIFYSWAP_ENV = 'prod';
@@ -46,7 +47,7 @@ var browserifyTask = function(callback, devMode) {
       _.extend(bundleConfig, watchify.args);
     }
 
-    var b = browserify(bundleConfig);
+    var b = browserify(bundleConfig).transform(shim, {global: true});
 
     var bundle = function() {
       // Log when bundling starts

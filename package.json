@@ -84,7 +84,6 @@
         }
       ],
       "browserify-swap",
-      "browserify-shim",
       "envify"
     ]
   }
